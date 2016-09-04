@@ -7,60 +7,18 @@ use Illuminate\Database\Eloquent\Model;
 class CompanyFeatures extends Model
 {
     //
+    protected $table = 'company_features';
 
-    protected $table = 'businesses';
+    protected $primaryKey = 'id';
 
-    public $timestamps = false;
-
-    public $primaryKey = 'user_id';
-
-    public $increamenting = false;
+    public $company_id = 'company_id';
 
 
-    //mass assign avoid
+    //mass asign avoid
 
-    protected $fillable =[
+    protected $fillable = [
+    'company_id',
+    'description',
 
-    	'user_id',
-    	'business_name',
-    	'creation_date'
-
-    	];
-
-    public static function create(array $attr = [], $normal = true)
-    {
-    	$role = $normal ? 'business': 'non-profit';
-
-    	if (!isset($attr['user_id']) && isset($attr['user'])) {
-    		# code...
-    		$attr['user']['role'] = $role;
-    		$user = User::create($attr['user']);
-
-    		unset($attr['user']);
-    		$attr['user_id'] = $user->id;
-    	}
-
-    	return parent::create($attr);
-    }
-
-    public function user()
-    {
-    	return $this->belongsTo('App\User');
-    }
-
-    public function getAgeAttribute()
-    {
-    	return \Carborn\Carborn::parse($this->creation_date)->age;
-    }
-
-    public function getNameAttribute()
-    {
-    	return "$this->business_name";
-    }
-
-    public function getHasPhoneAttribute()
-    {
-    	return is_null($this->local_phone);
-    }
-
+    ];
 }
