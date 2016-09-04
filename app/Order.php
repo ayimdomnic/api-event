@@ -94,7 +94,7 @@ class Order extends Model
         }
         return $this;
     }
-    
+
     public function sendNotice()
     {
         if (!empty($this->seller_id) && !empty($this->user_id) && $this->type == 'order') {
@@ -211,9 +211,11 @@ class Order extends Model
             $address_id = $cart->address_id;
         }
         $address = Address::where('id', $address_id)->first();
+
         //Checks if the user has points for the cart price and the store has stock
         //and set the order prices to the current ones if different
         //Creates the lists or sellers to send mail to
+
         $total_points = 0;
         $seller_email = [];
         foreach ($cartDetail as $orderDetail) {
@@ -347,14 +349,17 @@ class Order extends Model
             return trans('store.insufficientFunds');
         }
     }
+
     public function scopeOfType($query, $type)
     {
         return $query->whereType($type);
     }
+
     public function scopeOfStatus($query, $status)
     {
         return $query->where('orders.status', $status);
     }
+    
     public function scopeOfDates($query, $from, $to = '')
     {
         if (trim($from) == '' && trim($to) == '') {
